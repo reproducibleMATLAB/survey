@@ -1,4 +1,10 @@
-function plotTrainingDemand(dataTable, column)
+function h = plotTrainingDemand(dataTable, column, xlabelon)
+
+    arguments
+        dataTable
+        column
+        xlabelon = false
+    end
 
     notInterested = dataTable(contains(dataTable{:,column}, "Not interested"), :);
     learnAlone = dataTable(contains(dataTable{:,column}, "Would like to learn (on my own)"), :);
@@ -6,7 +12,7 @@ function plotTrainingDemand(dataTable, column)
     familiar = dataTable(contains(dataTable{:,column}, "Already familiar with"), :);
     noResponse = dataTable(strcmp(dataTable{:,column}, ""), :);
     
-    figure;
+    % figure;
     barVals = [countByExperience(notInterested, "Novice") countByExperience(notInterested, "Competent Practitioner") countByExperience(notInterested, "Expert");...
         countByExperience(learnAlone , "Novice") countByExperience(learnAlone , "Competent Practitioner") countByExperience(learnAlone , "Expert");...
         countByExperience(learnStructured, "Novice") countByExperience(learnStructured, "Competent Practitioner") countByExperience(learnStructured, "Expert");...
@@ -20,11 +26,14 @@ function plotTrainingDemand(dataTable, column)
     x = categorical(labels);
     x = reordercats(x,labels);
 
-    handle = bar(x, y, 'stacked');
-    ylabel(strcat("% of ", num2str(height(dataTable)), " respondents"))
+    h = bar(x, y, 'stacked');
 
-    stackedBarLabels = {'Novice', 'Competent Practitioner', 'Expert'};
-    legend(flip(handle), flip(stackedBarLabels), "Location","northeastoutside")
+    if ~xlabelon
+        set(gca,'Xticklabel',[]) 
+    end
+    
+    % stackedBarLabels = {'Novice', 'Competent Practitioner', 'Expert'};
+    % legend(flip(handle), flip(stackedBarLabels), "Location","northeastoutside")
 
     set(gcf,'Units','normalized','Position',[0 0 1 1.5]);
     colormap parula
