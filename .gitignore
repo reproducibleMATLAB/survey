@@ -1,4 +1,5 @@
 data/raw/deanonymised_responses.csv
+*.html
 
 # Windows default autosave extension
 *.asv
