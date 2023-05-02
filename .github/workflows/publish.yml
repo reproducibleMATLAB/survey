@@ -20,7 +20,7 @@ jobs:
     - name: Run commands
       uses: matlab-actions/run-command@v1
       with:
-        command: "mkdir('build');export('analysis.mlx', 'build/analysis.html')"
+        command: mkdir("build");export("analysis.mlx", "build/analysis.html")
     - name: Publish to gh pages
       if: ${{ github.event_name == 'push' }}
       uses: JamesIves/github-pages-deploy-action@v4
